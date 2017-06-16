@@ -15,8 +15,7 @@ import javax.swing.*;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,12 +41,8 @@ public class CreateTestCode4GroovyMethod extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent event) {
-
-        if (Objects.nonNull(frame)) {
-            frame.removeAll();
-            frame = null;
-        }
         GroovyKeyListener keyListener = new GroovyKeyListener();
+        GroovyMouseListener mouseListener = new GroovyMouseListener();
         PsiFile psiFile = event.getData(PlatformDataKeys.PSI_FILE);
         createTestFile(psiFile);
         if (psiFile != null) {
@@ -55,7 +50,10 @@ public class CreateTestCode4GroovyMethod extends AnAction {
             basePath = psiFile.getProject().getBasePath() + "/scm-common/target/classes/com/social/credits/common/rest/";
             for (PsiClass psiClass : ((PsiJavaFileImpl) psiFile).getClasses()) {
                 this.psiClass = psiClass;
-                frame = StaticBuildMethod.createMethodTree4Groovy(psiClass, keyListener);
+                frame = StaticBuildMethod.createMethodTree4Groovy(psiClass, keyListener, mouseListener);
+                frame.setAutoRequestFocus(true);
+                frame.setFocusable(true);
+                frame.setFocusableWindowState(true);
             }
         }
 
@@ -336,77 +334,111 @@ public class CreateTestCode4GroovyMethod extends AnAction {
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == 10) {
-                String re = "";
-                List<String> selectMethod = new ArrayList<>();
-                for (TreePath treePath : ((Tree) e.getSource()).getSelectionPaths()) {
-                    if (treePath.getPath().length > 1) {
-                        selectMethod.add(treePath.getPath()[1].toString());
-                    }
-                }
-                List<ResponseCode> responseCodes = selectMethod.stream().map(s -> {
-                    if (s.split("_").length > 1) {
-                        return new ResponseCode(s.split("_")[0], s.split("_")[1]);
-                    } else {
-                        return new ResponseCode(s, "");
-                    }
-                }).collect(Collectors.toList());
-                if (Objects.nonNull(e.getSource())) {
-                    String classApi = getClassApi(psiClass.getText());
-                    for (ResponseCode responseCode : responseCodes) {
-                        Map<String, CreateElement> map = new LinkedHashMap<>();
-                        for (PsiMethod psiMethod : psiClass.getMethods()) {
-                            if (responseCode.getMethodName().equals(psiMethod.getName())) {
-                                Scanner scanner = new Scanner(psiMethod.getText());
-                                String result = "";
-                                String resultLine = "";
-                                String message = "";
-                                String code = "";
-                                while (scanner.hasNextLine()) {
-                                    String line = scanner.nextLine();
-                                    if (line.contains("@ApiResponse") && !line.contains("@ApiResponses") && line.contains(responseCode.getCode())) {
-                                        message = getMessage(line);
-                                        code = StaticBuildMethod.getCode(line);
-                                    }
-                                    if (line.contains("@GetMapping")) {
-                                        result = "GET";
-                                        resultLine = line;
-                                    } else if (line.contains("@PutMapping")) {
-                                        result = "PUT";
-                                        resultLine = line;
-                                    } else if (line.contains("@DeleteMapping")) {
-                                        result = "DELETE";
-                                        resultLine = line;
-                                    } else if (line.contains("@PostMapping")) {
-                                        result = "POST";
-                                        resultLine = line;
-                                    }
-                                }
-                                map.put(psiMethod.getName() + "_" + code.trim(), buildCreateElement(classApi, resultLine, HTTPMethod.valueOf(result), psiMethod.getParameterList().getParameters()));
-                                re += copyToSystemClipboard(map, message);
-                                re += "\n";
-                            }
-                        }
-                    }
-                    frame.dispose();
-                }
-                if (e.getKeyCode() == 27) {
-                    frame.dispose();
-                }
-                StringSelection stringSelection = new StringSelection(re);
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, stringSelection);
+                buildStart(e);
+            }
+            if (e.getKeyCode() == 27) {
+                frame.dispose();
             }
         }
 
-        private String getMessage(String line) {
-            if (StringUtils.isNotEmpty(line)) {
-                return line.substring(line.indexOf("\"") + 1, line.lastIndexOf("\""));
-            } else {
-                return "";
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+    }
+
+    class GroovyMouseListener implements MouseListener{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 2) {
+                buildStart(e);
             }
         }
 
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
+    private void buildStart(InputEvent e) {
+        String re = "";
+        List<String> selectMethod = new ArrayList<>();
+        for (TreePath treePath : ((Tree) e.getSource()).getSelectionPaths()) {
+            if (treePath.getPath().length > 1) {
+                selectMethod.add(treePath.getPath()[1].toString());
+            }
+        }
+        List<ResponseCode> responseCodes = selectMethod.stream().map(s -> {
+            if (s.split("_").length > 1) {
+                return new ResponseCode(s.split("_")[0], s.split("_")[1]);
+            } else {
+                return new ResponseCode(s, "");
+            }
+        }).collect(Collectors.toList());
+        if (Objects.nonNull(e.getSource())) {
+            String classApi = getClassApi(psiClass.getText());
+            for (ResponseCode responseCode : responseCodes) {
+                Map<String, CreateElement> map = new LinkedHashMap<>();
+                for (PsiMethod psiMethod : psiClass.getMethods()) {
+                    if (responseCode.getMethodName().equals(psiMethod.getName())) {
+                        Scanner scanner = new Scanner(psiMethod.getText());
+                        String result = "";
+                        String resultLine = "";
+                        String message = "";
+                        String code = "";
+                        while (scanner.hasNextLine()) {
+                            String line = scanner.nextLine();
+                            if (line.contains("@ApiResponse") && !line.contains("@ApiResponses") && line.contains(responseCode.getCode())) {
+                                message = getMessage(line);
+                                code = StaticBuildMethod.getCode(line);
+                            }
+                            if (line.contains("@GetMapping")) {
+                                result = "GET";
+                                resultLine = line;
+                            } else if (line.contains("@PutMapping")) {
+                                result = "PUT";
+                                resultLine = line;
+                            } else if (line.contains("@DeleteMapping")) {
+                                result = "DELETE";
+                                resultLine = line;
+                            } else if (line.contains("@PostMapping")) {
+                                result = "POST";
+                                resultLine = line;
+                            }
+                        }
+                        map.put(psiMethod.getName() + "_" + code.trim(), buildCreateElement(classApi, resultLine, HTTPMethod.valueOf(result), psiMethod.getParameterList().getParameters()));
+                        re += copyToSystemClipboard(map, message);
+                        re += "\n";
+                    }
+                }
+            }
+            frame.dispose();
+        }
+        StringSelection stringSelection = new StringSelection(re);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, stringSelection);
+    }
+
+    private String getMessage(String line) {
+        if (StringUtils.isNotEmpty(line)) {
+            return line.substring(line.indexOf("\"") + 1, line.lastIndexOf("\""));
+        } else {
+            return "";
         }
     }
 

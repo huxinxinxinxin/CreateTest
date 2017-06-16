@@ -49,7 +49,7 @@ public class CreateTestCode4JunitMethod extends AnAction {
     }
 
     private void copyToSystemClipboard(Map<String, CreateElement> createElementMap, PsiClass psiClass) {
-        StringSelection stringSelection = new StringSelection(StaticBuildMethod.getMethodString(createElementMap, psiClass));
+        StringSelection stringSelection = new StringSelection(StaticBuildMethod.getMethodString4Junit(createElementMap, psiClass));
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, stringSelection);
         System.out.println("copyToSystemClipboard done");
     }

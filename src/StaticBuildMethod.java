@@ -6,8 +6,12 @@ import com.intellij.ui.treeStructure.Tree;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,13 @@ public class StaticBuildMethod {
         Rectangle bounds = gc[0].getBounds();
         JFrame frame = new JFrame("createJunitMethodTree");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                frame.requestFocus();
+                super.windowOpened(e);
+            }
+        });
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(psiClass.getName());
         for (PsiMethod psiMethod : psiClass.getMethods()) {
             if (psiMethod.getText().contains("public")) {
@@ -33,23 +44,30 @@ public class StaticBuildMethod {
         }
         Tree tree = new Tree(node);
         tree.addKeyListener(keyListener);
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
+        tree.setSelectionPath(tree.getPathForRow(1));
         Font font = new Font(null, 0, 5);
         frame.setFont(font);
         frame.setSize(500, 500);
-        frame.setLocation(new Double(bounds.getWidth()).intValue()/2 - 250, new Double(bounds.getHeight()).intValue()/2 - 250);
+        frame.setLocation(new Double(bounds.getWidth()).intValue() / 2 - 250, new Double(bounds.getHeight()).intValue() / 2 - 250);
         frame.getContentPane().add(tree);
         frame.setVisible(true);
         frame.show();
         return frame;
     }
 
-    public static JFrame createMethodTree4Groovy(PsiClass psiClass, KeyListener keyListener) {
+    public static JFrame createMethodTree4Groovy(PsiClass psiClass, KeyListener keyListener, MouseListener mouseListener) {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
         GraphicsConfiguration[] gc = gs[0].getConfigurations();
         Rectangle bounds = gc[0].getBounds();
         JFrame frame = new JFrame("createGroovyMethodTree");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setFocusable(true);
+        frame.setFocusableWindowState(true);
+        frame.setAutoRequestFocus(true);
+        frame.setAlwaysOnTop(true);
+        frame.setFocusTraversalKeysEnabled(true);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(psiClass.getName());
         for (PsiMethod psiMethod : psiClass.getMethods()) {
             Scanner scanner = new Scanner(psiMethod.getText());
@@ -72,28 +90,30 @@ public class StaticBuildMethod {
         }
         Tree tree = new Tree(node);
         tree.addKeyListener(keyListener);
+        tree.addMouseListener(mouseListener);
+        tree.setSelectionRow(1);
         Font font = new Font(null, 0, 5);
         frame.setFont(font);
         frame.setSize(500, 500);
-        frame.setLocation(new Double(bounds.getWidth()).intValue()/2 - 250, new Double(bounds.getHeight()).intValue()/2 - 250);
+        frame.setLocation(new Double(bounds.getWidth()).intValue() / 2 - 250, new Double(bounds.getHeight()).intValue() / 2 - 250);
         frame.getContentPane().add(tree);
         frame.setVisible(true);
         frame.show();
         return frame;
     }
 
-    public static String getMethodString(Map<String, CreateElement> createElementMap, PsiClass psiClass) {
+    public static String getMethodString4Junit(Map<String, CreateElement> createElementMap, PsiClass psiClass) {
         String result = "";
-        for (Map.Entry<String, CreateElement> elementEntry: createElementMap.entrySet()) {
-            result += getLine(1,"",1) +
+        for (Map.Entry<String, CreateElement> elementEntry : createElementMap.entrySet()) {
+            result += getLine(1, "", 1) +
                     getLine(1, "@Test", 1) +
-                    getLine(1, "public void test_"+elementEntry.getKey()+"() {", 1) +
+                    getLine(1, "public void test_" + elementEntry.getKey() + "() {", 1) +
                     getLine(2, "try {", 1);
             if (!elementEntry.getValue().getResponse().equals("void")) {
                 result += getLine(3, elementEntry.getValue().getResponse() + " response = " + toLowerFirstCode(psiClass.getName()) + "." + elementEntry.getKey() + "(" + writeParam(elementEntry.getValue().getParamTypes()) + ");", 1) +
-                        getLine(3, "assert response != null;", 1) ;
+                        getLine(3, "assert response != null;", 1);
             } else {
-                result += getLine(3, toLowerFirstCode(psiClass.getName()) + "." + elementEntry.getKey() + "(" +  writeParam(elementEntry.getValue().getParamTypes()) + ");", 1);
+                result += getLine(3, toLowerFirstCode(psiClass.getName()) + "." + elementEntry.getKey() + "(" + writeParam(elementEntry.getValue().getParamTypes()) + ");", 1);
 
             }
             result += getLine(2, "} catch (Exception e) {", 1) +
@@ -109,7 +129,7 @@ public class StaticBuildMethod {
         CreateElement createElement = new CreateElement();
         createElement.setResponse(psiTypeElement.getText());
         String[] paramTypes = new String[psiParameters.length];
-        for (int i = 0; i < psiParameters.length ; i++) {
+        for (int i = 0; i < psiParameters.length; i++) {
             paramTypes[i] = psiParameters[i].getType().getCanonicalText();
         }
         createElement.setParamTypes(paramTypes);
@@ -122,7 +142,7 @@ public class StaticBuildMethod {
 
     public static String getLn(int count) {
         String result = "";
-        for (int i = 0; i < count ; i ++) {
+        for (int i = 0; i < count; i++) {
             result += "\n";
         }
         return result;
@@ -130,7 +150,7 @@ public class StaticBuildMethod {
 
     public static String getTab(int count) {
         String result = "";
-        for (int i = 0; i < count ; i ++) {
+        for (int i = 0; i < count; i++) {
             result += "\t";
         }
         return result;
@@ -148,9 +168,9 @@ public class StaticBuildMethod {
             if (params[i].equals("java.lang.String")) {
                 paramStr += "\"\"";
             } else {
-                paramStr += "new " + params[i].split("\\.")[ params[i].split("\\.").length - 1] + "()";
+                paramStr += "new " + params[i].split("\\.")[params[i].split("\\.").length - 1] + "()";
             }
-            if (i != params.length -1) {
+            if (i != params.length - 1) {
                 paramStr += ", ";
             }
         }
