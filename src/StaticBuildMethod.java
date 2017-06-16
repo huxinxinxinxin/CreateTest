@@ -8,24 +8,66 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by hx-pc on 17-1-6.
  */
 public class StaticBuildMethod {
 
-    public static JFrame createMethodTree(PsiClass psiClass, KeyListener keyListener) {
+    public static JFrame createMethodTree4Junit(PsiClass psiClass, KeyListener keyListener) {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
         GraphicsConfiguration[] gc = gs[0].getConfigurations();
         Rectangle bounds = gc[0].getBounds();
-        JFrame frame = new JFrame("createMethodTree");
+        JFrame frame = new JFrame("createJunitMethodTree");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(psiClass.getName());
         for (PsiMethod psiMethod : psiClass.getMethods()) {
             if (psiMethod.getText().contains("public")) {
                 node.add(new DefaultMutableTreeNode(psiMethod.getName()));
+            }
+        }
+        Tree tree = new Tree(node);
+        tree.addKeyListener(keyListener);
+        Font font = new Font(null, 0, 5);
+        frame.setFont(font);
+        frame.setSize(500, 500);
+        frame.setLocation(new Double(bounds.getWidth()).intValue()/2 - 250, new Double(bounds.getHeight()).intValue()/2 - 250);
+        frame.getContentPane().add(tree);
+        frame.setVisible(true);
+        frame.show();
+        return frame;
+    }
+
+    public static JFrame createMethodTree4Groovy(PsiClass psiClass, KeyListener keyListener) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        GraphicsConfiguration[] gc = gs[0].getConfigurations();
+        Rectangle bounds = gc[0].getBounds();
+        JFrame frame = new JFrame("createGroovyMethodTree");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(psiClass.getName());
+        for (PsiMethod psiMethod : psiClass.getMethods()) {
+            Scanner scanner = new Scanner(psiMethod.getText());
+            List<String> stringList = new ArrayList<>();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains("@ApiResponse") && !line.contains("@ApiResponses")) {
+                    stringList.add(getCode(line));
+                }
+                if (line.contains("public")) {
+                    if (stringList.size() == 0) {
+                        node.add(new DefaultMutableTreeNode(psiMethod.getName()));
+                    }
+                    for (String str : stringList) {
+                        node.add(new DefaultMutableTreeNode(psiMethod.getName() + "_" + str));
+                    }
+                    stringList = new ArrayList<>();
+                }
             }
         }
         Tree tree = new Tree(node);
@@ -115,4 +157,7 @@ public class StaticBuildMethod {
         return paramStr;
     }
 
+    public static String getCode(String ln) {
+        return ln.substring(ln.indexOf("=") + 1, ln.indexOf(","));
+    }
 }

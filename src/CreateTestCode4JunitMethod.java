@@ -40,7 +40,7 @@ public class CreateTestCode4JunitMethod extends AnAction {
         if (psiFile != null) {
             for (PsiClass psiClass : ((PsiJavaFileImpl) psiFile).getClasses()) {
                 this.psiClass = psiClass;
-                frame = StaticBuildMethod.createMethodTree(psiClass, keyListener);
+                frame = StaticBuildMethod.createMethodTree4Junit(psiClass, keyListener);
             }
         }
     }
@@ -77,12 +77,10 @@ public class CreateTestCode4JunitMethod extends AnAction {
                     }
                     copyToSystemClipboard(createElementMap, psiClass);
                 }
-                frame.hide();
-            } else if (e.getKeyCode() >= 37 && e.getKeyCode() <= 40 || e.getKeyCode() == 17
-                    || e.getKeyCode() == 18 || e.getKeyCode() == 65) {
-
-            } else {
-                frame.hide();
+                frame.dispose();
+            }
+            if (e.getKeyCode() == 27) {
+                frame.dispose();
             }
         }
         @Override

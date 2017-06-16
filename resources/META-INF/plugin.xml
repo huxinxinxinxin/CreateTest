@@ -1,0 +1,49 @@
+<idea-plugin version="1">
+  <id>brown.bat</id>
+  <name>BrownBat</name>
+  <version>1.3.0</version>
+  <vendor email="xin.hu@socialcredits.com" url="xin.hu@socialcredits.com">socialcredits</vendor>
+
+  <depends>com.intellij.modules.lang</depends>
+
+  <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <!--<group id="MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
+      <add-to-group group-id="MainMenu" anchor="last"  />
+      <action id="MyPlugin.CreateTestCode" class="CreateTestCode" text="Create Test Code" description="ctc"/>
+    </group>-->
+    <group id="20170105.CreateTestCode" text="_Create Test Code" description="Create Test Code">
+      <add-to-group group-id="EditorLangPopupMenu" anchor="first"  />
+      <action id="20170105.CreateTestCode4JunitMethod" class="CreateTestCode4JunitMethod" text="Create Test Code 4 junit method" description="ctc"/>
+      <action id="20170105.CreateTestCode4JunitClass" class="CreateTestCode4JunitClass" text="Create Test Code 4 junit class" description="ctc"/>
+      <action id="20170615.CreateTestCode4GroovyMethod" class="CreateTestCode4GroovyMethod" text="Create Test Code 4 groovy method" description="ctc"/>
+    </group>
+    <!--<action id="CreateTestCode4JunitMethod" class="CreateTestCode4JunitMethod" text="_Create Test Code 4 junit method" description="ctc">
+      <add-to-group group-id="EditorLangPopupMenu" anchor="first"/>
+    </action>-->
+  </actions>
+
+</idea-plugin>
