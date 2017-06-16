@@ -1,20 +1,17 @@
 <idea-plugin version="1">
   <id>brown.bat</id>
   <name>BrownBat</name>
-  <version>1.3.0</version>
+  <version>1.3.0.1</version>
   <vendor email="xin.hu@socialcredits.com" url="xin.hu@socialcredits.com">socialcredits</vendor>
 
   <depends>com.intellij.modules.lang</depends>
 
-  <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
-    ]]></description>
+  <description>
+    for socialcredits
+  </description>
 
-  <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
-    ]]>
+  <change-notes>
+    socialcredits
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

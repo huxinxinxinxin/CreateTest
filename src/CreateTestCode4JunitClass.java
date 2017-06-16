@@ -40,7 +40,7 @@ public class CreateTestCode4JunitClass extends AnAction {
                         }
                     }
                     try {
-                        fileWriter.write(StaticBuildMethod.getMethodString(createElementMap, psiClass));
+                        fileWriter.write(StaticBuildMethod.getMethodString4Junit(createElementMap, psiClass));
                         fileWriter.write(StaticBuildMethod.getLine(0,"}", 0));
                         fileWriter.flush();
                         fileWriter.close();
