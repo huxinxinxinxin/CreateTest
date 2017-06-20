@@ -180,4 +180,37 @@ public class StaticBuildMethod {
     public static String getCode(String ln) {
         return ln.substring(ln.indexOf("=") + 1, ln.indexOf(","));
     }
+
+    public static JFrame createMethodTree4OpenTerminate(List<OpenTerminate.ThElement> thElements, OpenTerminate.OTKeyListener otKeyListener, OpenTerminate.MyMouseListener myMouseListener) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        GraphicsConfiguration[] gc = gs[0].getConfigurations();
+        Rectangle bounds = gc[0].getBounds();
+        JFrame frame = new JFrame("OpenTerminate");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                frame.requestFocus();
+                super.windowOpened(e);
+            }
+        });
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode("选择一个登录,按回车结束");
+        for (OpenTerminate.ThElement element : thElements) {
+            node.add(new DefaultMutableTreeNode(element.getLabel() + "["+element.getDesc()+"]"));
+        }
+        Tree tree = new Tree(node);
+        tree.addKeyListener(otKeyListener);
+        tree.addMouseListener(myMouseListener);
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        tree.setSelectionPath(tree.getPathForRow(1));
+        Font font = new Font(null, Font.PLAIN, 5);
+        frame.setFont(font);
+        frame.setSize(500, 500);
+        frame.setLocation(new Double(bounds.getWidth()).intValue() / 2 - 250, new Double(bounds.getHeight()).intValue() / 2 - 250);
+        frame.getContentPane().add(tree);
+        frame.setVisible(true);
+        frame.show();
+        return frame;
+    }
 }
