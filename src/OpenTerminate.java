@@ -121,10 +121,10 @@ public class OpenTerminate extends AnAction {
 
     private void gnomeTerminal(String username, String password, String host) {
         try {
-            String [] cmd={"/bin/sh", "-c", "gnome-terminal -e \"expect " + PathManager.getPluginsPath() + "/bb/test.sh" +
+            String [] cmd={"/bin/sh", "-c", "terminator -x expect " + PathManager.getPluginsPath() + "/bb/test.sh" +
                     " "+username+" " +
                     ""+host+" " +
-                    ""+password+"\""};
+                    ""+password+""};
             Runtime.getRuntime().exec(cmd);
         } catch (IOException e) {
             LOGGER.error("{}", e);
@@ -256,12 +256,25 @@ public class OpenTerminate extends AnAction {
         }
         for (ThElement thElement : thElements) {
             if ((thElement.getLabel() + "["+thElement.getDesc()+"]").equals(sel)) {
-                gnomeTerminal(thElement.getUsername(), thElement.getPassword(), thElement.getHost());
+                if (thElement.getPassword().equals("?")) {
+                    terminator(thElement.getUsername(), thElement.getHost());
+                } else {
+                    gnomeTerminal(thElement.getUsername(), thElement.getPassword(), thElement.getHost());
+                }
                 break;
             }
         }
         if (frame != null) {
             frame.dispose();
+        }
+    }
+
+    private void terminator(String username, String host) {
+        try {
+            String [] cmd={"/bin/sh", "-c", "terminator -x ssh "+username+"@"+host};
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            LOGGER.error("{}", e);
         }
     }
 
