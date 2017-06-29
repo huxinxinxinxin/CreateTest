@@ -1,29 +1,30 @@
 <idea-plugin version="1">
   <id>brown.bat</id>
   <name>BrownBat</name>
-  <version>1.3.0.2</version>
+  <version>1.3.0.4</version>
   <vendor email="xin.hu@socialcredits.com" url="xin.hu@socialcredits.com">socialcredits</vendor>
 
   <depends>com.intellij.modules.lang</depends>
 
   <description>
     <![CDATA[
-      for socialcredits :
-        code for exampl :
-          @ApiResponses(value = {
-          @ApiResponse(code = 404, message = "error")
-          })
-          @PostMapping("/xxxx/xx")
-          public ResponseEntity<Object> filter(@ApiParam(value = "搜索过滤参数", required = true) @RequestBody Object request) throws SuspendExecution {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-          }
-      This plug automatically generates test code to the clipboard
+
+      for socialcredits : <br/>
+        code for exampl : <br/>
+          @ApiResponses(value = { <br/>
+          @ApiResponse(code = 404, message = "error") <br/>
+          }) <br/>
+          @PostMapping("/xxxx/xx") <br/>
+          public ResponseEntity<Object> filter(@ApiParam(value = "搜索过滤参数", required = true) @RequestBody Object request) throws SuspendExecution { <br/>
+            return new ResponseEntity<>(response, HttpStatus.OK); <br/>
+          } <br/>
+      This plug automatically generates test code to the clipboard <br/>
     ]]>
   </description>
 
   <change-notes>
     socialcredits:
-      add Simple Plugin, can quick open alias
+      fix bug : new windows input size is changeless.
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

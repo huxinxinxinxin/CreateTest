@@ -112,6 +112,7 @@ public class OpenTerminate extends AnAction {
                 file.createNewFile();
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write("testLogin xin.hu 2wsx3edc 192.168.31.116 测试登录本地".getBytes());
+                fos.write("testLoginWithoutPasswd xin.hu ? 192.168.31.116 测试登录本地免密码".getBytes());
             }
         } catch (IOException e) {
             LOGGER.error("{}", e);
