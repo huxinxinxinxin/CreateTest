@@ -46,8 +46,8 @@ public class CreateTestCode4GroovyMethod extends AnAction {
         PsiFile psiFile = event.getData(PlatformDataKeys.PSI_FILE);
         createTestFile(psiFile);
         if (psiFile != null) {
-            realBasePath = psiFile.getProject().getBasePath() + "/scm-common/src/main/java/com/social/credits/common/rest/";
-            basePath = psiFile.getProject().getBasePath() + "/scm-common/target/classes/com/social/credits/common/rest/";
+            realBasePath = psiFile.getProject().getBasePath();
+//            basePath = psiFile.getProject().getBasePath() + "/scm-common/target/classes/com/social/credits/common/rest/";
             for (PsiClass psiClass : ((PsiJavaFileImpl) psiFile).getClasses()) {
                 this.psiClass = psiClass;
                 frame = StaticBuildMethod.createMethodTree4Groovy(psiClass, keyListener, mouseListener);
@@ -159,7 +159,7 @@ public class CreateTestCode4GroovyMethod extends AnAction {
         List<File> allFile = new ArrayList<>();
         scanFile(allFile, new File(basePath));
         for (File file : allFile) {
-            if (file.getName().startsWith(requestClassName)) {
+            if (file.getName().equals(requestClassName + ".java")) {
                 try {
                     Scanner scanner = new Scanner(file);
                     while (scanner.hasNextLine()) {
@@ -220,6 +220,9 @@ public class CreateTestCode4GroovyMethod extends AnAction {
     }
 
     private void scanFile(List<File> res, File directory) {
+        if (!directory.exists()) {
+            return;
+        }
         for (File file : directory.listFiles()) {
             if (file.isDirectory()) {
                 scanFile(res, file.getAbsoluteFile());
