@@ -34,14 +34,15 @@
         }
         ps : def restClient = new RESTClient("127.0.0.1:8080")
         如果你的Object是一个其他实体,我将会把所有字段都对应读取出来
-2.Simple Plugin (位于上边栏最后一个):
-step1: 拥有一台linux系统的电脑
-step2: 安装expect
-step3: 安装terminator
-step4: 配置config, 配置文件 在.IntelliJIdea2016.3/config/plugins/bb中
-config 格式 : 中间用空格隔开
-
-别名 帐号 密码 ip 注释
-
-别名最好用英文，支持中文。如果没有密码，用？代替。当通过这个插件登录过一次远程服务器。系统自动加入别名，可以直接用别名登录。
+        
+        
+2.Simple Plugin (位于上边栏最后一个):  
+step1: 拥有一台linux系统的电脑  
+step2: 安装expect  
+step3: 安装terminator  
+step4: 配置config, 配置文件 在.IntelliJIdea2016.3/config/plugins/bb中  
+config 格式 : 中间用空格隔开  
+别名 帐号 密码 ip 注释  
+别名最好用英文，支持中文。如果没有密码，用？代替。当通过这个插件登录过一次远程服务器。系统自动加入别名，可以直接用别名登录。  
 效果类似： ssh username@ip ,自动帮助你输入密码，完成登录。
+
