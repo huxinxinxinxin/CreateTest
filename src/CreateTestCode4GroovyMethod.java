@@ -35,7 +35,7 @@ public class CreateTestCode4GroovyMethod extends AnAction {
 
     private static List<String> excludeClass = Arrays.asList("");
     private PsiClass psiClass;
-    private JFrame frame;
+    private JFrame frame = new JFrame();
     private String basePath;
     private String realBasePath;
 

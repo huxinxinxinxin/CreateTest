@@ -22,7 +22,7 @@ public class OpenTerminate extends AnAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenTerminate.class);
 
-    private JFrame frame;
+    private JFrame frame = new JFrame();
     List<ThElement> thElements;
     private static boolean toUpdate = false;
     private static Long fileDate;
@@ -61,9 +61,6 @@ public class OpenTerminate extends AnAction {
         }
         thElements = getThElement(file);
         buildLocalAlias(thElements);
-        if (Objects.nonNull(frame)) {
-            frame.removeAll();
-        }
         frame = StaticBuildMethod.createMethodTree4OpenTerminate(thElements, new OTKeyListener(), new MyMouseListener());
     }
 

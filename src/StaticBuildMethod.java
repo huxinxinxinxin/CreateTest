@@ -28,7 +28,7 @@ public class StaticBuildMethod {
         GraphicsConfiguration[] gc = gs[0].getConfigurations();
         Rectangle bounds = gc[0].getBounds();
         JFrame frame = new JFrame("createJunitMethodTree");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -46,13 +46,14 @@ public class StaticBuildMethod {
         tree.addKeyListener(keyListener);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
         tree.setSelectionPath(tree.getPathForRow(1));
-        Font font = new Font(null, 0, 5);
+        tree.setIgnoreRepaint(false);
+        Font font = new Font("Ubuntu", 0, 5);
         frame.setFont(font);
         frame.setSize(500, 500);
         frame.setLocation(new Double(bounds.getWidth()).intValue() / 2 - 250, new Double(bounds.getHeight()).intValue() / 2 - 250);
         frame.getContentPane().add(tree);
         frame.setVisible(true);
-        frame.show();
+        frame.toFront();
         return frame;
     }
 
@@ -62,7 +63,8 @@ public class StaticBuildMethod {
         GraphicsConfiguration[] gc = gs[0].getConfigurations();
         Rectangle bounds = gc[0].getBounds();
         JFrame frame = new JFrame("createGroovyMethodTree");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setFocusable(true);
         frame.setFocusableWindowState(true);
         frame.setAutoRequestFocus(true);
@@ -92,13 +94,14 @@ public class StaticBuildMethod {
         tree.addKeyListener(keyListener);
         tree.addMouseListener(mouseListener);
         tree.setSelectionRow(1);
-        Font font = new Font(null, 0, 5);
+        tree.setIgnoreRepaint(false);
+        Font font = new Font("Ubuntu", 0, 5);
         frame.setFont(font);
         frame.setSize(500, 500);
         frame.setLocation(new Double(bounds.getWidth()).intValue() / 2 - 250, new Double(bounds.getHeight()).intValue() / 2 - 250);
         frame.getContentPane().add(tree);
         frame.setVisible(true);
-        frame.show();
+        frame.toFront();
         return frame;
     }
 
@@ -187,7 +190,7 @@ public class StaticBuildMethod {
         GraphicsConfiguration[] gc = gs[0].getConfigurations();
         Rectangle bounds = gc[0].getBounds();
         JFrame frame = new JFrame("OpenTerminate");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -200,17 +203,18 @@ public class StaticBuildMethod {
             node.add(new DefaultMutableTreeNode(element.getLabel() + "["+element.getDesc()+"]"));
         }
         Tree tree = new Tree(node);
+        Font font = new Font("Ubuntu", Font.PLAIN, 5);
         tree.addKeyListener(otKeyListener);
         tree.addMouseListener(myMouseListener);
+        tree.setIgnoreRepaint(false);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setSelectionPath(tree.getPathForRow(1));
-        Font font = new Font(null, Font.PLAIN, 5);
-        frame.setFont(font);
         frame.setSize(500, 500);
         frame.setLocation(new Double(bounds.getWidth()).intValue() / 2 - 250, new Double(bounds.getHeight()).intValue() / 2 - 250);
-        frame.getContentPane().add(tree);
+        frame.add(tree);
+        frame.setFont(font);
         frame.setVisible(true);
-        frame.show();
+        frame.toFront();
         return frame;
     }
 }

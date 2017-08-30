@@ -26,7 +26,7 @@ public class CreateTestCode4JunitMethod extends AnAction {
     }
 
     private PsiClass psiClass;
-    private JFrame frame;
+    private JFrame frame = new JFrame();;
 
     @Override
     public void actionPerformed(AnActionEvent event) {
