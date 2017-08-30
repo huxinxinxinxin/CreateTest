@@ -57,7 +57,7 @@ public class StaticBuildMethod {
         return frame;
     }
 
-    public static JFrame createMethodTree4Groovy(PsiClass psiClass, KeyListener keyListener, MouseListener mouseListener) {
+    public static JFrame createMethodTree4Groovy(PsiClass psiClass, KeyListener keyListener, MouseListener mouseListener, String target) {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
         GraphicsConfiguration[] gc = gs[0].getConfigurations();
@@ -72,21 +72,21 @@ public class StaticBuildMethod {
         frame.setFocusTraversalKeysEnabled(true);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(psiClass.getName());
         for (PsiMethod psiMethod : psiClass.getMethods()) {
-            Scanner scanner = new Scanner(psiMethod.getText());
-            List<String> stringList = new ArrayList<>();
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (line.contains("@ApiResponse") && !line.contains("@ApiResponses")) {
-                    stringList.add(getCode(line));
-                }
-                if (line.contains("public")) {
-                    if (stringList.size() == 0) {
-                        node.add(new DefaultMutableTreeNode(psiMethod.getName()));
+            if (target == null || psiMethod.getName().equals(target)) {
+                node.add(new DefaultMutableTreeNode(psiMethod.getName() + "_" + 200));
+                Scanner scanner = new Scanner(psiMethod.getText());
+                List<String> stringList = new ArrayList<>();
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (line.contains("@ApiResponse") && !line.contains("@ApiResponses")) {
+                        stringList.add(getCode(line));
                     }
-                    for (String str : stringList) {
-                        node.add(new DefaultMutableTreeNode(psiMethod.getName() + "_" + str));
+                    if (line.contains("public")) {
+                        for (String str : stringList) {
+                            node.add(new DefaultMutableTreeNode(psiMethod.getName() + "_" + str));
+                        }
+                        stringList = new ArrayList<>();
                     }
-                    stringList = new ArrayList<>();
                 }
             }
         }
