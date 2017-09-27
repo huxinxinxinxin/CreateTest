@@ -41,19 +41,19 @@
             }
             ps : def restClient = new RESTClient("127.0.0.1:8080") <br/>
             如果你的Object是一个其他实体,我将会把所有字段都对应读取出来 <br/>
-            没有默认快捷键,因为我写不来,自己改. 建议ctrl + 1<br/>
+            没有默认快捷键,因为我写不来,自己改. 建议ctrl + 1<br/><br/>
 
           2.Simple Plugin (位于上边栏最后一个): <br/>
             step1: 拥有一台linux系统的电脑<br/>
             step2: 安装expect<br/>
             step3: 安装terminator<br/>
-            step4: 配置config, 配置文件 在.IntelliJIdea2016.3/config/plugins/bb中<br/>
+            step4: 配置config, 配置文件 在.IntelliJIdea2016.3/config/plugins/bb中<br/><br/>
 
             config 格式 : 中间用空格隔开 <br/>
                 别名 帐号 密码 ip 注释 <br/>
-            别名 最好用英文，支持中文。如果没有密码，用？代替。当通过这个插件登录过一次远程服务器。系统自动加入别名，可以直接用别名登录。 <br/>
+            别名 最好用英文，支持中文。如果没有密码，用？代替。当通过这个插件登录过一次远程服务器。系统自动加入别名，可以直接用别名登录。 <br/><br/>
             效果类似： ssh username@ip ,自动帮助你输入密码，完成登录。 <br/>
-            没有默认快捷键,因为我写不来,自己改. 建议ctrl + 2<br/>
+            没有默认快捷键,因为我写不来,自己改. 建议ctrl + 2<br/><br/>
 
             3.translate baidu of camel case:百度翻译并且返回驼峰式译文<br/>
              先选择你要翻译的一段话<br/>
