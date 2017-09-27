@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="redis.RedisUI">
+  <grid id="27dc6" binding="content" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="3" width="817" height="691"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="22893" binding="jpanelTop" layout-manager="FlowLayout" hgap="1" vgap="0" flow-align="0">
+        <constraints border-constraint="North"/>
+        <properties>
+          <font swing-font="CheckBox.font"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="4edc8" class="javax.swing.JLabel" binding="ip">
+            <constraints/>
+            <properties>
+              <text value="ip:"/>
+            </properties>
+          </component>
+          <component id="2a0d9" class="javax.swing.JTextField" binding="textFieldIp">
+            <constraints/>
+            <properties>
+              <columns value="20"/>
+              <font swing-font="Viewport.font"/>
+              <text value="192.168.31.121"/>
+            </properties>
+          </component>
+          <component id="40997" class="javax.swing.JLabel" binding="port">
+            <constraints/>
+            <properties>
+              <text value="port:"/>
+            </properties>
+          </component>
+          <component id="52654" class="javax.swing.JTextField" binding="textFieldPort">
+            <constraints/>
+            <properties>
+              <columns value="6"/>
+              <text value="6379"/>
+            </properties>
+          </component>
+          <component id="baa28" class="javax.swing.JLabel" binding="jpwd">
+            <constraints/>
+            <properties>
+              <text value="pwd"/>
+            </properties>
+          </component>
+          <component id="ed1e2" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+            <constraints/>
+            <properties>
+              <columns value="16"/>
+            </properties>
+          </component>
+          <component id="25907" class="javax.swing.JButton" binding="buttonOk">
+            <constraints/>
+            <properties>
+              <text value="确定"/>
+            </properties>
+          </component>
+          <component id="bb34d" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="9cb9a" class="javax.swing.JTextField" binding="textFieldSearch">
+            <constraints/>
+            <properties>
+              <columns value="30"/>
+              <font swing-font="CheckBox.font"/>
+            </properties>
+          </component>
+          <component id="b0fc5" class="javax.swing.JButton" binding="buttonSerach">
+            <constraints/>
+            <properties>
+              <text value="搜索"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="9757a" binding="jpanelLeft" layout-manager="FlowLayout" hgap="1" vgap="1" flow-align="0">
+        <constraints border-constraint="West"/>
+        <properties>
+          <preferredSize width="115" height="384"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <scrollpane id="e61f4" binding="jScrollTree">
+            <constraints/>
+            <properties/>
+            <border type="none">
+              <color color="-4514779"/>
+            </border>
+            <children>
+              <component id="78c4c" class="javax.swing.JTree" binding="jtree">
+                <constraints/>
+                <properties>
+                  <editable value="false"/>
+                  <font swing-font="CheckBox.font"/>
+                  <toolTipText value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="c8fe0" binding="jpanelData" layout-manager="BorderLayout" hgap="1" vgap="1">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <background color="-12501233"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <scrollpane id="b1cd1" binding="scrollData">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="b24f6" class="javax.swing.JTextArea" binding="textAreaData">
+                <constraints/>
+                <properties>
+                  <font swing-font="Tree.font"/>
+                  <lineWrap value="true"/>
+                  <text value="this is format data"/>
+                  <wrapStyleWord value="true"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

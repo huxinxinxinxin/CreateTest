@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>brown.bat</id>
     <name>BrownBat</name>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
     <vendor email="xin.hu@socialcredits.com" url="xin.hu@socialcredits.com">socialcredits</vendor>
 
     <depends>com.intellij.modules.lang</depends>
@@ -59,12 +59,18 @@
              先选择你要翻译的一段话<br/>
              右键 选中 translate of CamelCase 翻译内容自动填充到剪切版, ctrl + v 粘帖 <br/>
              没有默认快捷键,因为我写不来,自己改. 建议ctrl + 3<br/>
-             中文中间不要出现空格<br/>
+             中文中间不要出现空格<br/><br/>
+
+            4.redis client(linux客户端)<br/>
+              使用点击菜单Simple plugin -> redisClient. by -> dongqiang.wu@socialcredits.com
         ]]>
     </description>
 
     <change-notes>
         <![CDATA[
+            1.3.4:<br/>
+                新增redis工具,适用linux,Simple plugin -> redisClient.<br/>
+                github: https://github.com/wudongqiang/redisClient.
             1.3.3:<br/>
                 优化生成groovy测试用例
             1.3.2:<br/>
@@ -94,6 +100,8 @@
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="MyPlugin.OpenTerminate" class="OpenTerminate" text="open terminate"
                     description="open terminate"/>
+            <action id="MyPlugin.RedisClient" class="redis.RedisClient" text="redis client"
+                    description="redis client"/>
         </group>
         <group id="20170105.CreateTestCode" text="_Create Test Code" description="Create Test Code">
             <add-to-group group-id="EditorLangPopupMenu" anchor="first"/>
