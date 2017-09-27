@@ -65,6 +65,8 @@
 
     <change-notes>
         <![CDATA[
+            1.3.3:<br/>
+                优化生成groovy测试用例
             1.3.2:<br/>
                 新增右键新工具 translate of CamelCase
                 翻译选中中文或者英文,中文中间不要出现空格,中文翻译返回驼峰式英文
