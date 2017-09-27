@@ -75,7 +75,11 @@ public class CreateTestCode4GroovyMethod extends EditorAction {
                     "\t* " + message + "\n" +
                     "\t*/\n";
             for (Map.Entry<String, CreateElement> entry : map.entrySet()) {
-                funcTestClassStr += "\t@Test\n";
+                if (entry.getKey().split("_")[1].equals("200")) {
+                    funcTestClassStr += "\t@Test\n";
+                } else {
+                    funcTestClassStr += "\t@Test(expected = RuntimeException.class)\n";
+                }
                 if (entry.getKey().split("_").length > 1) {
                     funcTestClassStr += "\tpublic void " + entry.getKey() + "() {\n" +
                             "\t\tdef headers = userLogin(accountInfo.dj)\n";
@@ -119,12 +123,9 @@ public class CreateTestCode4GroovyMethod extends EditorAction {
                 }
 
                 funcTestClassStr += "\t\t\theaders: headers)\n";
-                if (entry.getKey().split("_").length > 1) {
-                    funcTestClassStr += "\t\tassert res.status == " + entry.getKey().split("_")[1] + "\n";
-                } else {
+                if (entry.getKey().split("_")[1].equals("200")) {
                     funcTestClassStr += "\t\tassert res.status == 200\n";
                 }
-
                 funcTestClassStr += "\t}\n\n\n";
             }
             return funcTestClassStr;
@@ -413,9 +414,14 @@ public class CreateTestCode4GroovyMethod extends EditorAction {
                             String code = "";
                             while (scanner.hasNextLine()) {
                                 String line = scanner.nextLine();
-                                if (line.contains("@ApiResponse") && !line.contains("@ApiResponses") && line.contains(responseCode.getCode())) {
-                                    message = getMessage(line);
-                                    code = StaticBuildMethod.getCode(line);
+                                if (responseCode.getCode().equals("200")) {
+                                    message = "OK";
+                                    code = "200";
+                                } else {
+                                    if (line.contains("@ApiResponse") && !line.contains("@ApiResponses") && line.contains(responseCode.getCode())) {
+                                        message = getMessage(line);
+                                        code = StaticBuildMethod.getCode(line);
+                                    }
                                 }
                                 if (line.contains("@GetMapping")) {
                                     result = "GET";
