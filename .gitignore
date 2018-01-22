@@ -18,3 +18,4 @@ target
 *.DS_Store
 **/apidoc_sourcedir/**
 nohup.out
+.idea
