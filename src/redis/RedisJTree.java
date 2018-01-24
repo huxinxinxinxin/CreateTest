@@ -28,7 +28,7 @@ public class RedisJTree implements TreeSelectionListener {
         dataKeys = new DataKeys();
 
         //初始化默认链接
-        RedisTools.initCommandLine("192.168.31.121",6379,null);
+        RedisTools.initCommandLine("192.168.31.121",6379,null, null);
 
         init();
     }

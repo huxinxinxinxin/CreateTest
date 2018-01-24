@@ -1,6 +1,7 @@
 package redis;
 
 import com.intellij.openapi.util.text.StringUtil;
+import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +17,16 @@ public class RedisTools {
     private static String commandline;
 
     //初始化命令行
-    public static void initCommandLine(String ip,int port, String password){
-        commandline = "redis-cli -h "+ip+" -p "+port+(StringUtil.isEmpty(password)?"":" -a "+password);
+    public static void initCommandLine(String ip,int port, String password, String redisHome){
+        if (System.getProperty("os.name").equals(OsE.Linux.toString())) {
+            commandline = "redis-cli -h "+ip+" -p "+port+(StringUtil.isEmpty(password)?"":" -a "+password);
+            return;
+        } else if (System.getProperty("os.name").equals(OsE.WINDOWS.toString())) {
+
+        }
+        throw new RuntimeException("不支持的操作系统, 目前支持" +
+                "linux" +
+                "");
     }
 
     public static Map<String, String> getRedisDbInfos() {

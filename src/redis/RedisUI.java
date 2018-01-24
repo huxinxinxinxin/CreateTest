@@ -30,6 +30,8 @@ public class RedisUI {
     private JPasswordField passwordField1;
     private JLabel jpwd;
     private JComboBox comboBox1;
+    private JLabel redisHome;
+    public JTextField textFieldRedisHome;
 
     public static Integer width;
     public static Integer height;
@@ -69,8 +71,9 @@ public class RedisUI {
                 String port = redisUI.textFieldPort.getText();
                 char[] password = redisUI.passwordField1.getPassword();
                 if(StringUtil.isNotEmpty(ip)&&StringUtil.isNotEmpty(port)) {
-                    System.out.println(new String(password));
-                    RedisTools.initCommandLine(ip, Integer.parseInt(port), password!=null?new String(password):null);
+                    RedisTools.initCommandLine(ip, Integer.parseInt(port),
+                            password!=null?new String(password):null,
+                            redisUI.textFieldRedisHome.getText());
                     redisUI.jtree.removeAll();
                     redisJTreeUI.init(ip);
 
@@ -94,7 +97,7 @@ public class RedisUI {
 
             }
         });
-
+        redisUI.textFieldRedisHome.setText(System.getenv("REDIS_HOME") == null ? "如何无法查询,请设置redis文件目录环境变量REDIS_HOME" : "");
         frame.setContentPane(redisUI.content);
         frame.setVisible(true);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
