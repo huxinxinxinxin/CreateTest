@@ -76,22 +76,6 @@
               <text value="搜索"/>
             </properties>
           </component>
-          <component id="4a419" class="javax.swing.JLabel" binding="redisHome">
-            <constraints/>
-            <properties>
-              <name value="redisHome"/>
-              <opaque value="false"/>
-              <text value="redisHome:"/>
-            </properties>
-          </component>
-          <component id="46eb7" class="javax.swing.JTextField" binding="textFieldRedisHome">
-            <constraints/>
-            <properties>
-              <preferredSize width="300" height="25"/>
-              <text value="redis 安装目录"/>
-              <toolTipText value=""/>
-            </properties>
-          </component>
         </children>
       </grid>
       <grid id="9757a" binding="jpanelLeft" layout-manager="FlowLayout" hgap="1" vgap="1" flow-align="0">
