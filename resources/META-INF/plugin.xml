@@ -2,7 +2,7 @@
     <id>brown.bat.redisCli</id>
     <name>BrownBat-redis-cli</name>
     <version>1.0.0</version>
-    <vendor email="xin.hu@socialcredits.com" url="xin.hu@socialcredits.com">xin.hu</vendor>
+    <vendor email="345598716@qq.com" url="out1kiss@gmail.com">xin.hu</vendor>
 
     <depends>com.intellij.modules.lang</depends>
 
@@ -11,11 +11,11 @@
         <html>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <body>
-                linux : 首先安装 redis-service
-                redis client(linux客户端)<br/>
-                  使用点击菜单Simple plugin -> redisClient <br/>
+                linux : 首先安装 redis-service<br/>
+                redis client:<br/>
+                  使用点击菜单Redis -> redisClient <br/>
                   使用方法: 输入ip,端口点击确定,选定哪个db. <br/>
-                  关于搜索: *name* ,*表示模糊匹配. <br/>
+                  关于搜索: name , 默认模糊匹配, 遵循redis匹配规则 <br/>
                   左边可以多选,右键删除或者刷新 <br/>
             </body>
            </head>
@@ -25,10 +25,7 @@
     <change-notes>
         <![CDATA[
             1.0.0:<br/>
-                新增redis工具,适用linux,windows <br/>
-                Simple plugin -> redisClient.<br/>
-                github: https://github.com/huxinxinxinxin/CreateTest <br/>
-                checkout BrownBat-redis-cli branch <br/>
+                新增redis工具,适配置所有环境 <br/>
         ]]>
     </change-notes>
 
