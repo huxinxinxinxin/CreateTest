@@ -1,8 +1,8 @@
 <idea-plugin>
     <id>brown.bat.redisCli</id>
     <name>BrownBat-redis-cli</name>
-    <version>1.0.1</version>
-    <vendor email="345598716@qq.com" url="out1kiss@gmail.com">xin.hu</vendor>
+    <version>1.0.2</version>
+    <vendor email="345598716@qq.com" url="https://github.com/huxinxinxinxin/CreateTest">huxin</vendor>
 
     <depends>com.intellij.modules.lang</depends>
 
@@ -12,10 +12,10 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <body>
                 redis client:<br/>
-                  使用点击菜单Redis -> redisClient <br/>
-                  使用方法: 输入ip,端口点击确定,选定哪个db. <br/>
-                  关于搜索: name , 默认模糊匹配, 遵循redis匹配规则 <br/>
-                  左边可以多选,右键删除或者刷新 <br/>
+                  click menu -> Redis -> redisClient <br/>
+                  use-method: input ip,port,then select db nummber. <br/>
+                  search: name , default fuzzy match, follow redis match rule <br/>
+                  left button can be multi-select, right delete or refresh <br/>
             </body>
            </head>
         ]]>
